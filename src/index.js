@@ -11,11 +11,10 @@ const Global = createGlobalStyle`
   decoration:none;
 }
 `
-
 ReactDOM.render(
   <React.StrictMode>
-    <Global />
-    <App />
+      <Global />
+      <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

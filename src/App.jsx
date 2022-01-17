@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./components/Header";
 import styled from "styled-components";
 import Footer from "./components/Footer";
+import { theme } from "./theme";
+import { ThemeProvider } from '@mui/material/styles';
 
 
 const AppWrapper = styled.div`
@@ -12,10 +14,12 @@ const AppWrapper = styled.div`
 
 function App() {
   return (
-    <AppWrapper>
-      <Header />
-      <Footer />
-    </AppWrapper>
+    <ThemeProvider theme={theme}>
+      <AppWrapper>
+        <Header />
+        <Footer />
+      </AppWrapper>
+    </ThemeProvider>
   );
 }
 
