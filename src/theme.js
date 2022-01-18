@@ -13,6 +13,7 @@ export const theme = createTheme({
         right: 0, 
         display: 'flex', 
         alignItems: 'baseline',
+        height: "170px",
     },
     footerContactInfo: {
         display: 'flex', 
@@ -27,5 +28,22 @@ export const theme = createTheme({
     footerContactHeader: {
         minWidth: '115px',
         maxWidth: '120px'
-    }
+    },
+    authTabPanel: {
+        width: 280,
+        margin: "5px auto"
+    },
+    authPaperStyle: {
+        padding: "8px 20px",
+        height: "58vh",
+        width: 280,
+        margin: "0 auto"
+    },
+    authAvatarStyle: {
+        padding: "10px",
+    },
+    palette: {
+        auth: "#3dc39e",
+    },
+
 });
