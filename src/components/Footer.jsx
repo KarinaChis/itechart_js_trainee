@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Container, Link, Typography, IconButton } from '@mui/material';
 import Box from '@mui/material/Box';
 import { makeStyles } from '@mui/styles';
+
 import LinkedInIcon         from '@mui/icons-material/LinkedIn';
 import EmailIcon            from '@mui/icons-material/Email';
 import InstallMobileIcon    from '@mui/icons-material/InstallMobile';
@@ -17,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     contactHeader: {...theme.footerContactHeader}
 }))
 
-export default function Footer(){
+const Footer = () => {
+    
     const classes = useStyles();
     
     return (
@@ -66,3 +68,5 @@ export default function Footer(){
         </footer>
     )
 }
+
+export default Footer;

@@ -1,16 +1,16 @@
 import React from 'react';
 
 import { AppBar, Button, ButtonGroup, Toolbar } from '@mui/material';
-
-import HomeIcon from '@mui/icons-material/Home';
-import GroupIcon from '@mui/icons-material/Group';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import LogoutIcon from '@mui/icons-material/Logout';
 import { makeStyles } from '@mui/styles';
+
+import HomeIcon         from '@mui/icons-material/Home';
+import GroupIcon        from '@mui/icons-material/Group';
+import AccountBoxIcon   from '@mui/icons-material/AccountBox';
+import LogoutIcon       from '@mui/icons-material/Logout';
 
 const useStyles = makeStyles((theme) => ({toolbar: {...theme.headerToolbar},}))
 
-export default function Header(){
+const Header = () => {
 
     const classes = useStyles();
 
@@ -29,3 +29,5 @@ export default function Header(){
         </AppBar>
     )
 }
+
+export default Header;
