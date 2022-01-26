@@ -1,3 +1,4 @@
+import { red } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
 
@@ -29,13 +30,27 @@ export const theme = createTheme({
         minWidth: '115px',
         maxWidth: '120px'
     },
+    authTabPanelBack: {
+        position: "fixed",
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+        height: "100vh",
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        transform: "scale(0)"
+    },
+    authTabPanelActive: {
+        transform: "scale(1)",
+        TransformStream: ""
+    },
     authTabPanel: {
         width: 280,
-        margin: "5px auto"
+        margin: "30px auto",
+        color: "inherit"
     },
     authPaperStyle: {
         padding: "8px 20px",
-        height: "58vh",
         width: 280,
         margin: "0 auto"
     },
@@ -44,6 +59,7 @@ export const theme = createTheme({
     },
     palette: {
         auth: "#3dc39e",
+        error: red,
     },
 
 });

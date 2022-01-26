@@ -22,7 +22,11 @@ const Header = () => {
                     <Button startIcon={<GroupIcon />}>Users</Button>
                     <Button startIcon={<AccountBoxIcon />}>Account</Button>
                 </ButtonGroup>
-                <Button endIcon={<LogoutIcon />} color="warning" variant="text.primary">
+                <Button 
+                    endIcon={<LogoutIcon />} 
+                    color="warning" 
+                    variant="text.primary"
+                    onClick={() => {}}>
                     Logout
                 </Button>
             </Toolbar>
