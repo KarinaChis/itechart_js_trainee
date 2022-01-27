@@ -1,3 +1,4 @@
+import { NoEncryption } from '@mui/icons-material';
 import { red } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
@@ -38,11 +39,6 @@ export const theme = createTheme({
         left: 0,
         height: "100vh",
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        transform: "scale(0)"
-    },
-    authTabPanelActive: {
-        transform: "scale(1)",
-        TransformStream: ""
     },
     authTabPanel: {
         width: 280,

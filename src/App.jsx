@@ -11,13 +11,13 @@ import SignInContainer from "./containers";
 import { useState } from "react";
 
 function App() {
-  const [modalActive, setModalActive] = useState(true)
+  const [modalVisible, setModalVisible] = useState(true)
   return (
     <ThemeProvider theme={theme}>
       <AppWrapper>
-        <Header />
+        <Header onClick={() => setModalVisible(true)}/>
         <Footer />
-        <SignInContainer active={modalActive} setModalActive={setModalActive}/>
+        <SignInContainer visible={modalVisible} setVisible={setModalVisible}/>
       </AppWrapper>
     </ThemeProvider>
   );

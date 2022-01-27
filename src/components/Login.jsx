@@ -60,6 +60,7 @@ const Login = ({ handleChange }) => {
                                 name="email"
                                 label="Email" 
                                 placeholder="Enter your email" 
+                                autoComplete="email"
                                 fullWidth 
                                 required
                                 helperText={<ErrorMessage name="email"/>}
@@ -71,6 +72,7 @@ const Login = ({ handleChange }) => {
                                 label="Password" 
                                 placeholder="Enter password" 
                                 type="password"
+                                autoComplete="current-password"
                                 fullWidth 
                                 required
                                 helperText={<ErrorMessage name="password" className={classes.errorStyle}/>}
@@ -88,7 +90,7 @@ const Login = ({ handleChange }) => {
                         </Form>
                     )}
                 </Formik>
-                <Typography> Or click
+                <Typography component={'span'}> Or click
                     <Link href="#" onClick={() => handleChange("event", 1)}> here </Link>
                     to create new account
                 </Typography>

@@ -4,18 +4,16 @@ import { useState } from "react";
 import { makeStyles } from '@mui/styles';
 import Login from "../components/Login";
 import Signup from "../components/Signup";
+import { Scale } from "@mui/icons-material";
 
 const useStyles = makeStyles((theme) => ({ 
     tabPanelBack: {...theme.authTabPanelBack},
-    tabPanel: {...theme.authTabPanel}, 
+    tabPanel: {...theme.authTabPanel, }, 
+    tabPanelActive: {...theme.authTabPanelBack    },
 }))
 
-const SignInContainer = ( visible, setVisible) => {
+const SignInContainer = ( { visible, setVisible }) => {
 
-    const rootClasses = []
-    if (visible) {
-
-    }
 
     const classes = useStyles();
     const [isSignUp, setSignUp] = useState(0);
@@ -25,13 +23,19 @@ const SignInContainer = ( visible, setVisible) => {
         const { children, value, index } = props;
         return (
             <div hidden={value !== index} >
-                {value === index && ( <Box> <Typography> {children} </Typography> </Box> )}
+                {value === index && ( <Box> <Typography component={'span'}> {children} </Typography> </Box> )}
             </div>
         )
     }
     
     return (
-        <div className={classes.tabPanelBack} onClick={() => {setVisible(false)}}>
+        <div 
+            className={visible ? classes.tabPanelActive : classes.tabPanelBack } 
+            onClick={() => {
+                setVisible(false)
+                console.log(visible)
+            }}
+        >
             <Paper elevation={20} className={classes.tabPanel} onClick = { e => e.stopPropagation()}>
                 <Tabs value={isSignUp} onChange={handleChange}>
                     <Tab label="Sign in"/>

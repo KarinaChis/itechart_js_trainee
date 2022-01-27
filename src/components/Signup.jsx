@@ -79,6 +79,7 @@ const Signup = () => {
                                 name="email"
                                 label="Email" 
                                 placeholder="Enter your email" 
+                                autoComplete="email"
                                 fullWidth 
                                 required
                                 helperText={ <ErrorMessage name="email"/>}
@@ -90,6 +91,7 @@ const Signup = () => {
                                 label="Password" 
                                 placeholder="Enter your password" 
                                 type="password"
+                                autoComplete="new-password"
                                 fullWidth 
                                 required
                                 helperText={ <ErrorMessage name="password"/>}
@@ -101,6 +103,7 @@ const Signup = () => {
                                 label="Confirm password" 
                                 placeholder="Confirm your password" 
                                 type="password"
+                                autoComplete="new-password"
                                 fullWidth 
                                 required
                                 helperText={ <ErrorMessage name="confirmPassword"/>}
