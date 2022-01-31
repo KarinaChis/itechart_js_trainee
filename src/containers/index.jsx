@@ -1,4 +1,4 @@
-import { Box, Paper, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Modal, Paper, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { makeStyles } from '@mui/styles';
@@ -29,7 +29,8 @@ const SignInContainer = ( { visible, setVisible }) => {
     }
     
     return (
-        <div 
+        <Modal 
+            open={visible}
             className={visible ? classes.tabPanelActive : classes.tabPanelBack } 
             onClick={() => {
                 setVisible(false)
@@ -48,7 +49,7 @@ const SignInContainer = ( { visible, setVisible }) => {
                     <Signup />
                 </TabPanel>
             </Paper>
-        </div>
+        </Modal>
         
       );
 }

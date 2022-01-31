@@ -7,15 +7,19 @@ import { makeStyles } from '@mui/styles';
 import HomeIcon         from '@mui/icons-material/Home';
 import GroupIcon        from '@mui/icons-material/Group';
 import AccountBoxIcon   from '@mui/icons-material/AccountBox';
+import LoginIcon        from '@mui/icons-material/Login';
 import LogoutIcon       from '@mui/icons-material/Logout';
-import { useState } from 'react';
-// import SignInContainer from '../containers';
 
 const useStyles = makeStyles((theme) => ({toolbar: {...theme.headerToolbar},}))
 
-const Header = () => {
+const Header = ({ modalVisible, setModalVisible }) => {
 
     const classes = useStyles();
+
+    const openModal = () => {
+        setModalVisible(true)
+        console.log(modalVisible)
+      }
 
     return (
         <AppBar position="static">
@@ -26,14 +30,13 @@ const Header = () => {
                     <Button startIcon={<AccountBoxIcon />}>Account</Button>
                 </ButtonGroup>
                 <Button 
-                    endIcon={<LogoutIcon />} 
+                    startIcon={<LoginIcon />} 
                     color="warning" 
                     variant="text.primary"
-                    onClick={() => (true)}>
-                    Logout
+                    onClick={() => openModal()}>
+                    Login
                 </Button>
             </Toolbar>
-            {/* <SignInContainer visible={visible} setVisible={setVisible}/> */}
         </AppBar>
     )
 }
