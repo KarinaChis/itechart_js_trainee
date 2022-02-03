@@ -12,14 +12,16 @@ import LogoutIcon       from '@mui/icons-material/Logout';
 
 const useStyles = makeStyles((theme) => ({toolbar: {...theme.headerToolbar},}))
 
-const Header = ({ modalVisible, setModalVisible }) => {
+const Header = ({ modalVisible, setModalVisible, setIsAuth, isAuth }) => {
 
     const classes = useStyles();
 
-    const openModal = () => {
-        setModalVisible(true)
-        console.log(modalVisible)
-      }
+
+    const openModal = () => {setModalVisible(true)}
+
+    const logOut = () => {
+        setIsAuth(false)
+    }
 
     return (
         <AppBar position="static">
@@ -29,13 +31,21 @@ const Header = ({ modalVisible, setModalVisible }) => {
                     <Button startIcon={<GroupIcon />}>Users</Button>
                     <Button startIcon={<AccountBoxIcon />}>Account</Button>
                 </ButtonGroup>
-                <Button 
-                    startIcon={<LoginIcon />} 
-                    color="warning" 
-                    variant="text.primary"
-                    onClick={() => openModal()}>
-                    Login
-                </Button>
+                {isAuth ? <Button 
+                                endIcon={<LogoutIcon />}
+                                color="warning" 
+                                variant="text.primary"
+                                onClick={() => logOut()}>
+                                Logout
+                          </Button>
+                        : <Button 
+                                startIcon={<LoginIcon />}
+                                color="warning" 
+                                variant="text.primary"
+                                onClick={() => openModal()}>
+                                Login
+                          </Button>
+                }
             </Toolbar>
         </AppBar>
     )

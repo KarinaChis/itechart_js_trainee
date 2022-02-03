@@ -4,7 +4,6 @@ import { useState } from "react";
 import { makeStyles } from '@mui/styles';
 import Login from "../components/Login";
 import Signup from "../components/Signup";
-import { Scale } from "@mui/icons-material";
 
 const useStyles = makeStyles((theme) => ({ 
     tabPanelBack: {...theme.authTabPanelBack},
@@ -12,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     tabPanelActive: {...theme.authTabPanelBack    },
 }))
 
-const SignInContainer = ( { visible, setVisible }) => {
+const SignInContainer = ( { visible, setVisible, setIsAuth }) => {
 
 
     const classes = useStyles();
@@ -31,11 +30,7 @@ const SignInContainer = ( { visible, setVisible }) => {
     return (
         <Modal 
             open={visible}
-            className={visible ? classes.tabPanelActive : classes.tabPanelBack } 
-            onClick={() => {
-                setVisible(false)
-                console.log(visible)
-            }}
+            onClick={() => {setVisible(false)}}
         >
             <Paper elevation={20} className={classes.tabPanel} onClick = { e => e.stopPropagation()}>
                 <Tabs value={isSignUp} onChange={handleChange}>
@@ -43,10 +38,10 @@ const SignInContainer = ( { visible, setVisible }) => {
                     <Tab label="Sign up"/>
                 </Tabs>
                 <TabPanel value={isSignUp} index={0}>
-                    <Login handleChange={handleChange}/>
+                    <Login handleChange={handleChange} setVisible={setVisible} setIsAuth={setIsAuth}/>
                 </TabPanel>
                 <TabPanel value={isSignUp} index={1}>
-                    <Signup />
+                    <Signup setVisible={setVisible}/>
                 </TabPanel>
             </Paper>
         </Modal>

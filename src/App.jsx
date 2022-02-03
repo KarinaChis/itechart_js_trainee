@@ -12,15 +12,16 @@ import { useState } from "react";
 
 function App() {
   const [modalVisible, setModalVisible] = useState(false)
+  const [isAuth, setIsAuth] = useState(false);
 
 
 
   return (
     <ThemeProvider theme={theme}>
       <AppWrapper>
-        <Header modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+        <Header modalVisible={modalVisible} setModalVisible={setModalVisible} setIsAuth={setIsAuth} isAuth={isAuth}/>
         <Footer />
-        <SignInContainer visible={modalVisible} setVisible={setModalVisible}/>
+        <SignInContainer visible={modalVisible} setVisible={setModalVisible} setIsAuth={setIsAuth} isAuth={isAuth}/>
       </AppWrapper>
     </ThemeProvider>
   );

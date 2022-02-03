@@ -1,11 +1,14 @@
 import React from 'react';
+import * as Yup from "yup";
 import { Avatar, Button, Grid, Link, Paper, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { theme } from '../theme';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
-import * as Yup from "yup";
+
+import { theme } from '../theme';
+import { login } from '../http/userApi';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     "MuiFormHelperText-root": { color: theme.palette.secondary}
 }))
 
-const Login = ({ handleChange }) => {
+const Login = ({ handleChange, setVisible, setIsAuth }) => {
 
     const classes = useStyles();
 
@@ -26,17 +29,28 @@ const Login = ({ handleChange }) => {
         password: "",
     };
 
+    const onSubmit = async ({ email, password }, props) => {
+        try {
+            const response = await login(email, password)
+            if(response) {
+                props.resetForm()
+                props.setSubmitting(false)
+                setVisible(false)
+                console.log(`successfully login ${email}`)
+                console.log(localStorage.token)
+                setIsAuth(true)
+            }
+        } catch (e){
+            alert(e.response.message)
+        }
+
+    };
+
     const validationSchema = Yup.object().shape({
         email:    Yup.string().email("Please, enter valid email").required("Required"),
         password: Yup.string().min(6, "Minimum lenght shoud be 6").required("Required"),
     })
 
-    const onSubmit = (values, props) => {
-        setTimeout(() => {
-            props.resetForm()
-            props.setSubmitting(false)
-        }, 2000)
-    };
 
     return(
         <Grid>
@@ -90,13 +104,15 @@ const Login = ({ handleChange }) => {
                         </Form>
                     )}
                 </Formik>
+                {/* <Typography component={'div'}> Click
+                    <Link href="#" onClick={() => handleChange("event", 1)}> here </Link>
+                    if you forgot your password
+                </Typography> */}
                 <Typography component={'span'}> Or click
                     <Link href="#" onClick={() => handleChange("event", 1)}> here </Link>
                     to create new account
                 </Typography>
-                
             </Paper>
-
         </Grid>
     )
 }

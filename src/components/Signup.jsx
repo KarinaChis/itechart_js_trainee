@@ -1,41 +1,49 @@
+import React from "react";
+import * as Yup from 'yup';
 import { Avatar, Grid, Button, Paper, TextField, Typography, } from "@mui/material"
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { makeStyles } from '@mui/styles';
-import React from "react";
-import { theme } from '../theme';
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from 'yup';
+
+import { theme } from '../theme';
+import { signup } from '../http/userApi';
+
 
 const useStyles = makeStyles((theme) => ({
     paperStyle: {...theme.authPaperStyle},
 
 }))
-const initialValues={
-    name:            "",
-    lastName:        "",
-    email:           "",
-    password:        "",
-    confirmPassword: "",
-}
 
-const Signup = () => {
+const Signup = ({ setVisible }) => {
 
     const classes = useStyles();
 
+    const initialValues={
+        firstName:       "",
+        lastName:        "",
+        email:           "",
+        password:        "",
+        confirmPassword: "",
+    }
+
     const validationSchema = Yup.object().shape({
-        name:               Yup.string().min(3, "It's too short").required("Required"),
+        firstName:          Yup.string().min(3, "It's too short").required("Required"),
         lastName:           Yup.string().min(3, "It's too short").required("Required"),
         email:              Yup.string().email("Please, enter valid email").required("Required"),
         password:           Yup.string().min(6, "Minimum lenght shoud be 6").required("Required"),
         confirmPassword:    Yup.string().oneOf([Yup.ref('password')], "Password not mathced").required("Required"),
     })
 
-    const onSubmit = (values, props) => {
-        setTimeout(() => {
+    const onSubmit = async ({ email, password, firstName, lastName }, props) => {
+        const response = await signup(email, password, firstName, lastName)
+        if(response) {
             props.resetForm()
-            props.setSubmitting()
-        }, 2000)
+            props.setSubmitting(false)
+            setVisible(false)
+            console.log(`successfully signup ${firstName} ${lastName}`)
+        }
     };
+
     return (
         <Grid>
             <Paper className={classes.paperStyle}>
@@ -56,12 +64,12 @@ const Signup = () => {
                             <Field 
                                 as={TextField}  
                                 variant="standard"
-                                name="name"
+                                name="firstName"
                                 label="Name" 
                                 placeholder="Enter your name" 
                                 fullWidth 
                                 required
-                                helperText={ <ErrorMessage name="name"/>}
+                                helperText={ <ErrorMessage name="firstName"/>}
                             />
                             <Field 
                                 as={TextField} 
