@@ -1,8 +1,8 @@
 import React from 'react';
+import Cookies  from 'js-cookie';
 
 import { AppBar, Button, ButtonGroup, Toolbar } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-
 
 import HomeIcon         from '@mui/icons-material/Home';
 import GroupIcon        from '@mui/icons-material/Group';
@@ -12,7 +12,7 @@ import LogoutIcon       from '@mui/icons-material/Logout';
 
 const useStyles = makeStyles((theme) => ({toolbar: {...theme.headerToolbar},}))
 
-const Header = ({ modalVisible, setModalVisible, setIsAuth, isAuth }) => {
+const Header = ({ setModalVisible, setIsAuth, isAuth }) => {
 
     const classes = useStyles();
 
@@ -20,7 +20,9 @@ const Header = ({ modalVisible, setModalVisible, setIsAuth, isAuth }) => {
     const openModal = () => {setModalVisible(true)}
 
     const logOut = () => {
-        setIsAuth(false)
+        setIsAuth(false);
+        Cookies.remove("refreshToken")
+        Cookies.remove("accessToken")
     }
 
     return (

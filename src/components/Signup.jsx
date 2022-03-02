@@ -59,7 +59,7 @@ const Signup = ({ setVisible }) => {
                     onSubmit={onSubmit}
                     validationSchema={validationSchema}
                 >
-                    {(props) => (
+                    {({ isSubmitting }) => (
                         <Form>
                             <Field 
                                 as={TextField}  
@@ -121,9 +121,9 @@ const Signup = ({ setVisible }) => {
                                 fullWidth 
                                 variant="contained" 
                                 sx={{margin: "15px 0"}}
-                                disabled={props.isSubmitting}
+                                disabled={isSubmitting}
                             >
-                                {props.isSubmitting ? "LOADING" : "SIGN UP"}
+                                {isSubmitting ? "LOADING" : "SIGN UP"}
                             </Button>
                         </Form>
                     )}
