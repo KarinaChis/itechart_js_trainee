@@ -9,7 +9,8 @@ import { login } from '../http/userApi';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Cookies from 'js-cookie';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { loginAction, modalInVisible } from '../redux/actions/actionCreator';
 
 const useStyles = makeStyles((theme) => ({
     paperStyle: {...theme.authPaperStyle},
@@ -20,33 +21,26 @@ const useStyles = makeStyles((theme) => ({
     "MuiFormHelperText-root": { color: theme.palette.secondary}
 }))
 
-const Login = ({ handleChange, setVisible, setIsAuth }) => {
+const Login = ({ handleChange }) => {
     const classes = useStyles();
     const initialValues = {
         email:    "",
         password: "",
     };
-    const store = useSelector( store => store );
     const dispatch = useDispatch()
-    // const onSubmit = async ({ email, password }, props) => {
-    //     try {
-    //         const response = await login(email, password)
-    //         if(response) {
-    //             props.resetForm()
-    //             props.setSubmitting(false)
-    //             setVisible(false)
-    //             setIsAuth(true)
-    //             Cookies.remove("")
-    //             Cookies.set("accessToken", response.accessToken)
-    //             Cookies.set("refreshToken", response.refreshToken)
-    //             console.log(response)
-    //             console.log(Cookies)
-    //         }
-    //     } catch (e){ alert(e.response.message) }
-    // };
-    const onSubmit = ({ email, password }) => {
-        dispatch({type:'CLICK'}, { email, password })
-    }
+    const onSubmit = async ({ email, password }, props) => {
+        try {
+            const response = await login(email, password)
+            if(response) {
+                props.resetForm()
+                props.setSubmitting(false)
+                Cookies.set("accessToken", response.accessToken)
+                Cookies.set("refreshToken", response.refreshToken)
+                dispatch(loginAction())
+                dispatch(modalInVisible())
+            }
+        } catch (e){ alert(e.response.message) }
+    };
     const validationSchema = Yup.object().shape({
         email:    Yup.string().email("Please, enter valid email").required("Required"),
         password: Yup.string().min(6, "Minimum lenght shoud be 6").required("Required"),
@@ -63,7 +57,6 @@ const Login = ({ handleChange, setVisible, setIsAuth }) => {
                 <Formik 
                     initialValues={initialValues} 
                     onSubmit={onSubmit}
-                    // onSubmit = {() => dispatch({type:'CLICK'})}
                     validationSchema={validationSchema}
                 >
                     {({ isSubmitting }) => (

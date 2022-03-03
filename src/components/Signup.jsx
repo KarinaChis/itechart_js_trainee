@@ -7,14 +7,16 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 
 import { theme } from '../theme';
 import { signup } from '../http/userApi';
+import { useDispatch } from "react-redux";
+import { signupAction, modalInVisible } from '../redux/actions/actionCreator';
 
 
-const useStyles = makeStyles((theme) => ({
-    paperStyle: {...theme.authPaperStyle},
 
-}))
+const useStyles = makeStyles((theme) => ({paperStyle: {...theme.authPaperStyle},}))
 
-const Signup = ({ setVisible }) => {
+const Signup = () => {
+
+    const dispatch = useDispatch()
 
     const classes = useStyles();
 
@@ -39,8 +41,9 @@ const Signup = ({ setVisible }) => {
         if(response) {
             props.resetForm()
             props.setSubmitting(false)
-            setVisible(false)
             console.log(`successfully signup ${firstName} ${lastName}`)
+            dispatch(signupAction())
+            dispatch(modalInVisible())
         }
     };
 

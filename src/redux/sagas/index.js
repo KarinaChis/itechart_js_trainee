@@ -1,6 +1,6 @@
 import { takeEvery, put, call } from "@redux-saga/core/effects";
 import { host } from "../../http";
-import { login, signup } from "../../http/userApi";
+import {  signup } from "../../http/userApi";
 import jwt_decode from "jwt-decode";
 
 

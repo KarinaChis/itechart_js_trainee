@@ -1,28 +1,9 @@
-const initial = {
-    isLogin: false,
-    isSignUp: false
-}
+import { combineReducers } from "redux";
+import auth from './auth'
 
 
-export default function reducer(state = initial, action) {
-    switch(action.type){
-        case 'LOGIN': {
-            return {
-                ...state,
-                isLogin: true
-            }
-        }
-        case 'SIGNUP': {
-            return {
-                ...state,
-                isSignUp: true
-            }
-        }
-        default:
-            return state;
-    }
-    
-    
-    
-}
+const reducer = combineReducers({
+    auth,
+})
 
+export default reducer;

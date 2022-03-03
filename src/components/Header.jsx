@@ -9,20 +9,26 @@ import GroupIcon        from '@mui/icons-material/Group';
 import AccountBoxIcon   from '@mui/icons-material/AccountBox';
 import LoginIcon        from '@mui/icons-material/Login';
 import LogoutIcon       from '@mui/icons-material/Logout';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOutAction, modalVisible } from '../redux/actions/actionCreator';
 
 const useStyles = makeStyles((theme) => ({toolbar: {...theme.headerToolbar},}))
 
-const Header = ({ setModalVisible, setIsAuth, isAuth }) => {
+const Header = () => {
 
     const classes = useStyles();
 
+    const isLogin = useSelector( store => store.auth.isLogin);
+    const dispatch = useDispatch();
 
-    const openModal = () => {setModalVisible(true)}
+    const openModal = () => {
+        dispatch(modalVisible())
+    }
 
     const logOut = () => {
-        setIsAuth(false);
         Cookies.remove("refreshToken")
         Cookies.remove("accessToken")
+        dispatch(logOutAction())
     }
 
     return (
@@ -33,7 +39,7 @@ const Header = ({ setModalVisible, setIsAuth, isAuth }) => {
                     <Button startIcon={<GroupIcon />}>Users</Button>
                     <Button startIcon={<AccountBoxIcon />}>Account</Button>
                 </ButtonGroup>
-                {isAuth ? <Button 
+                {isLogin ? <Button 
                                 endIcon={<LogoutIcon />}
                                 color="warning" 
                                 variant="text.primary"
