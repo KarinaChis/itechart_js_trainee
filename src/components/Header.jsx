@@ -11,6 +11,7 @@ import LoginIcon        from '@mui/icons-material/Login';
 import LogoutIcon       from '@mui/icons-material/Logout';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOutAction, modalVisible } from '../redux/actions/actionCreator';
+import { getPosts } from '../http/userApi';
 
 const useStyles = makeStyles((theme) => ({toolbar: {...theme.headerToolbar},}))
 
@@ -26,16 +27,28 @@ const Header = () => {
     }
 
     const logOut = () => {
-        Cookies.remove("refreshToken")
-        Cookies.remove("accessToken")
+        Cookies.remove("jwtAccessToken")
+        Cookies.remove("jwtRefreshToken")
         dispatch(logOutAction())
+        console.log("Succesfully logout")
     }
+
+    const getAllPosts = async () => {
+        try {
+            const response = await getPosts()
+            if(response) {
+                console.log(response)
+            }
+        } catch (e){ 
+            console.dir(e.message)
+            alert(e) }
+    };
 
     return (
         <AppBar position="static">
             <Toolbar className={classes.toolbar}>
                 <ButtonGroup variant="text.primary" aria-label="text button group">
-                    <Button startIcon={<HomeIcon />} >Home</Button>
+                    <Button startIcon={<HomeIcon />} onClick={() => getAllPosts()}>Home</Button>
                     <Button startIcon={<GroupIcon />}>Users</Button>
                     <Button startIcon={<AccountBoxIcon />}>Account</Button>
                 </ButtonGroup>

@@ -1,35 +1,30 @@
-import { takeEvery, put, call } from "@redux-saga/core/effects";
-import { host } from "../../http";
-import {  signup } from "../../http/userApi";
-import jwt_decode from "jwt-decode";
+import { takeLeading, put, all } from "@redux-saga/core/effects";
+import Cookies from "js-cookie";
+import { login, signup } from "../../http/userApi";
+import { LOGIN, SIGNUP, MAKE_INVISIBLE } from "../constants";
 
 
-export function* workerSaga({email, password}){
-
-    const login = async () => {
-        const { data } = await host
-            .post('/api/v1/users/login', { email, password })
-            .catch((err) => {
-                throw new Error(err)
-            })
-        if(data.accessToken) {
-            jwt_decode(data.accessToken);
-            // localStorage.setItem('token', data.accessToken)
+export function* workerLoginSaga({ payload }){
+    try {
+        const response = yield login(payload.email, payload.password)
+        if(response) {
+            Cookies.set("jwtAccessToken", response.accessToken)
+            Cookies.set("jwtRefreshToken", response.refreshToken)
+            yield put({type: MAKE_INVISIBLE})
         }
-        return data
-    }
-
-    const log = yield call(login); 
-    yield call(signup); 
-
-    yield put({type: 'LOGIN', payload: log})
-    yield put({type: 'SIGNUP',})
+    } catch (e){ alert(e.response.message) }
 }
 
-export function* watchSaga(){
-    yield takeEvery('CLICK', workerSaga)
-};
+export function* workerSignupSaga({ payload }){
+    try {
+        const response = yield signup(payload.email, payload.password, payload.firstName, payload.lastName)
+        if(response) { yield put({type: MAKE_INVISIBLE})}
+    } catch (e){ alert(e.response.message) }
+}
+
+export function* watchLoginSaga(){ yield takeLeading(LOGIN, workerLoginSaga) };
+export function* watchSignupSaga(){ yield takeLeading(SIGNUP, workerSignupSaga) };
 
 export default function* rootSaga(){
-    yield watchSaga();
+    yield all([watchLoginSaga(),watchSignupSaga()]);
 }

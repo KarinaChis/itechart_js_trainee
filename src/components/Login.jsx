@@ -5,12 +5,10 @@ import { makeStyles } from '@mui/styles';
 import { Form, Formik, Field, ErrorMessage } from 'formik';
 
 import { theme } from '../theme';
-import { login } from '../http/userApi';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
-import { loginAction, modalInVisible } from '../redux/actions/actionCreator';
+import { loginAction } from '../redux/actions/actionCreator';
 
 const useStyles = makeStyles((theme) => ({
     paperStyle: {...theme.authPaperStyle},
@@ -28,19 +26,11 @@ const Login = ({ handleChange }) => {
         password: "",
     };
     const dispatch = useDispatch()
-    const onSubmit = async ({ email, password }, props) => {
-        try {
-            const response = await login(email, password)
-            if(response) {
-                props.resetForm()
-                props.setSubmitting(false)
-                Cookies.set("accessToken", response.accessToken)
-                Cookies.set("refreshToken", response.refreshToken)
-                dispatch(loginAction())
-                dispatch(modalInVisible())
-            }
-        } catch (e){ alert(e.response.message) }
-    };
+    const onSubmit = (data, props) => {
+        dispatch(loginAction(data))
+        props.resetForm()
+        props.setSubmitting(false)
+    }
     const validationSchema = Yup.object().shape({
         email:    Yup.string().email("Please, enter valid email").required("Required"),
         password: Yup.string().min(6, "Minimum lenght shoud be 6").required("Required"),

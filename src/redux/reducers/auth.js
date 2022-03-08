@@ -1,13 +1,13 @@
 import { LOGIN, SIGNUP, LOGOUT, MAKE_VISIBLE, MAKE_INVISIBLE } from "../constants";
 
 const initial = {
-    isLogin: false,
-    isSignUp: false,
-    isVisible: false
+    isLogin:    false,
+    isSignUp:   false,
+    isVisible:  false
 }
 
 const auth = ( state = initial, { type } ) => {
-    switch(type){
+    switch (type) {
         case LOGIN: {
             return {
                 ...state,

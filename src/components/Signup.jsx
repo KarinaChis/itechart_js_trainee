@@ -6,9 +6,8 @@ import { makeStyles } from '@mui/styles';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
 import { theme } from '../theme';
-import { signup } from '../http/userApi';
 import { useDispatch } from "react-redux";
-import { signupAction, modalInVisible } from '../redux/actions/actionCreator';
+import { signupAction } from '../redux/actions/actionCreator';
 
 
 
@@ -17,9 +16,7 @@ const useStyles = makeStyles((theme) => ({paperStyle: {...theme.authPaperStyle},
 const Signup = () => {
 
     const dispatch = useDispatch()
-
     const classes = useStyles();
-
     const initialValues={
         firstName:       "",
         lastName:        "",
@@ -27,7 +24,6 @@ const Signup = () => {
         password:        "",
         confirmPassword: "",
     }
-
     const validationSchema = Yup.object().shape({
         firstName:          Yup.string().min(3, "It's too short").required("Required"),
         lastName:           Yup.string().min(3, "It's too short").required("Required"),
@@ -35,18 +31,11 @@ const Signup = () => {
         password:           Yup.string().min(6, "Minimum lenght shoud be 6").required("Required"),
         confirmPassword:    Yup.string().oneOf([Yup.ref('password')], "Password not mathced").required("Required"),
     })
-
-    const onSubmit = async ({ email, password, firstName, lastName }, props) => {
-        const response = await signup(email, password, firstName, lastName)
-        if(response) {
-            props.resetForm()
-            props.setSubmitting(false)
-            console.log(`successfully signup ${firstName} ${lastName}`)
-            dispatch(signupAction())
-            dispatch(modalInVisible())
-        }
+    const onSubmit = (data, props) => {
+        dispatch(signupAction(data))
+        props.resetForm()
+        props.setSubmitting(false)
     };
-
     return (
         <Grid>
             <Paper className={classes.paperStyle}>
