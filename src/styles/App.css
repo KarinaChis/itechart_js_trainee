@@ -1,0 +1,9 @@
+.MuiFormHelperText-root{
+    color: red !important;
+};
+.tabPanelBack{
+    transform: scale(0);
+};
+.tabPanelActive{
+    transform: scale(1);
+};
